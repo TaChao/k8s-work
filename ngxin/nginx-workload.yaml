@@ -13,6 +13,20 @@ spec:
   selector:
     app: nginx
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pv-claim
+  labels:
+    app: nginx
+spec:
+  storageClassName: slow
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
 apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment
 metadata:
@@ -20,7 +34,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -31,18 +45,14 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.7.9
+        image: nginx
         ports:
         - containerPort: 80
-      volumeMounts:
-      - name: nginx
-        mountPath: /etc/nginx/conf.d/
-  volumeClaimTemplates:
-  - metadata:
-      name: nginx
-    spec:
-      accessModes: [ "ReadWriteMany" ]
-      storageClassName: slow
-      resources:
-        requests:
-          storage: 2Gi
+          name: http
+        volumeMounts:
+        - name: nginx-persistent-storage
+          mountPath: /etc/nginx/conf.d/
+      volumes:
+      - name: nginx-persistent-storage
+        persistentVolumeClaim:
+          claimName: nginx-pv-claim
