@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: esl-nginx
+  name: nginx
 spec:
   type: LoadBalancer
   loadBalancerSourceRanges:
@@ -10,13 +10,16 @@ spec:
   - port: 80
     targetPort: 80
     name: http
+  - port: 443
+    targetPort: 443
+    name: ssl
   selector:
     app: nginx
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: esl-nginx-pv-claim
+  name: nginx-pv-claim
   labels:
     app: nginx
 spec:
@@ -34,20 +37,23 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: esl-nginx
+      app: nginx
   replicas: 1 # tells deployment to run 2 pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
       # generated from the deployment name
       labels:
-        app: esl-nginx
+        app: nginx
     spec:
       containers:
-      - name: esl-nginx
+      - name: nginx
         image: nginx:alpine
         ports:
         - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: ssl
         volumeMounts:
         - name: nginx-persistent-storage
           mountPath: /etc/nginx/conf.d

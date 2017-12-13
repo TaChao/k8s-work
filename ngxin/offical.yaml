@@ -1,9 +1,11 @@
-apiVersion: apps/v1beta1
-kind: Deployment
+apiVersion: v1
+kind: ReplicationController
 metadata:
-  name: nginx-deployment
+  name: nginx-rc
 spec:
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  selector:
+    app: nginx
   template: # create pods using pod definition in this template
     metadata:
       # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
@@ -11,9 +13,17 @@ spec:
       labels:
         app: nginx
     spec:
+      volumes:
+      - name: nginx-persistent-storage
+        persistentVolumeClaim:
+          claimName: nginx-pv-claim
       containers:
       - name: nginx
         image: nginx:alpine
         ports:
-        - containerPort: 80
-        - containerPort: 443
+        - name: http
+          containerPort: 80
+          hostPort: 80
+        volumeMounts:
+        - name: nginx-persistent-storage
+          mountPath: /etc/nginx/conf.d
