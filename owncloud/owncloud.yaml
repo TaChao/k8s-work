@@ -1,9 +1,21 @@
 apiVersion: v1
+kind: Service
+metadata:
+  name: owncloud
+  labels:
+    app: owncloud
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: owncloud
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nginx-pv-claim
+  name: owncloud-pv-claim
   labels:
-    app: nginx
+    app: owncloud
 spec:
   storageClassName: data
   accessModes:
@@ -15,43 +27,29 @@ spec:
 apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: owncloud-deployment
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: owncloud
   replicas: 1 # tells deployment to run 2 pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
       # generated from the deployment name
       labels:
-        app: nginx
+        app: owncloud
     spec:
       containers:
-      - name: nginx
-        image: killonexx/nginx:1.13.7
+      - name: owncloud
+        image: owncloud
         ports:
         - containerPort: 80
           name: http
-        - containerPort: 443
-          name: ssl
-        - containerPort: 8080
-          name: shop-web
-        - containerPort: 3306
-          name: mysql
-        - containerPort: 9000
-          name: esl-http-1
-        - containerPort: 37021
-          name: esl-tcp-1
-        - containerPort: 9001
-          name: esl-http-2
-        - containerPort: 37022
-          name: esl-tcp-2
         volumeMounts:
-        - name: nginx-persistent-storage
-          mountPath: /etc/nginx/conf.d
+        - name: owncloud-persistent-storage
+          mountPath: /var/www/html
       volumes:
-      - name: nginx-persistent-storage
+      - name: owncloud-persistent-storage
         persistentVolumeClaim:
-          claimName: nginx-pv-claim
+          claimName: owncloud-pv-claim
