@@ -22,7 +22,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 10Gi
 ---
 apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment
@@ -42,13 +42,13 @@ spec:
     spec:
       containers:
       - name: owncloud
-        image: owncloud
+        image: owncloud:10.0
         ports:
         - containerPort: 80
           name: http
         volumeMounts:
         - name: owncloud-persistent-storage
-          mountPath: /var/www/html
+          mountPath: /var/www
       volumes:
       - name: owncloud-persistent-storage
         persistentVolumeClaim:
