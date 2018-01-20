@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: killonexx/nginx:1.13.7
+        image: killonexx/nginx:jdomain
         ports:
         - containerPort: 80
           name: http

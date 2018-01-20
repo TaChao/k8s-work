@@ -1,0 +1,25 @@
+apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: helper
+spec:
+  selector:
+    matchLabels:
+      app: helper
+  serviceName: helper
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx-plus.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: helper
+    spec:
+      imagePullSecrets:
+      - name: regsecret
+      containers:
+      - name: nginx-plus
+        image: killonexx/hanshow:helper
+        ports:
+        - containerPort: 8080
+          name: http

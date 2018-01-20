@@ -7,20 +7,6 @@ metadata:
 data:
   stream.conf: |
     server {
-       listen      9000;
-       proxy_pass  esl-0.esl:9000
-    }
-    server {
        listen      37021;
-       proxy_pass  esl-0.esl:37021
-    }
-  http.conf: |
-    server {
-       listen       80;
-       server_name  localhost;
-
-       location / {
-          proxy_set_header Host $host;
-          proxy_pass       http://owncloud;
-       }
+       proxy_pass  esl-0.esl.default.svc.cluster.local:37021;
     }
