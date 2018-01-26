@@ -25,7 +25,11 @@ spec:
           - name: SET_NAME
             value: "esl"
           - name: PODS_NUM
-            value: "0"
+            value: "49"
+          - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
         lifecycle:
           postStart:
             exec:
@@ -34,30 +38,216 @@ spec:
               - "-c"
               - |
                 set -ex
-                echo "*  *  *  *  * echo hello >> /hello" >> /etc/crontabs/root
+                chmod +x -R /script
+                sh /script/init.sh $SET_NAME $PODS_NUM 9000 $NAMESPACE
+                sh /script/init.sh $SET_NAME $PODS_NUM 37021 $NAMESPACE
                 crond
 
         ports:
-        - containerPort: 80
-          name: http
-        - containerPort: 443
-          name: ssl
-        - containerPort: 8080
-          name: shop-web
-        - containerPort: 3306
-          name: mysql
         - containerPort: 9000
-          name: esl-http-1
+          name: esl-http-0
         - containerPort: 37021
-          name: esl-tcp-1
+          name: esl-tcp-0
         - containerPort: 9001
-          name: esl-http-2
+          name: esl-http-1
         - containerPort: 37022
+          name: esl-tcp-1
+        - containerPort: 9002
+          name: esl-http-2
+        - containerPort: 37023
           name: esl-tcp-2
-      #   volumeMounts:
-      #   - name: config-volume
-      #     mountPath: /etc/nginx/conf.d/stream
-      # volumes:
-      # - name: config-volume
-      #   configMap: 
-      #     name: nginx
+        - containerPort: 9003
+          name: esl-http-3
+        - containerPort: 37024
+          name: esl-tcp-3
+        - containerPort: 9004
+          name: esl-http-4
+        - containerPort: 37025
+          name: esl-tcp-4
+        - containerPort: 9005
+          name: esl-http-5
+        - containerPort: 37026
+          name: esl-tcp-5
+        - containerPort: 9006
+          name: esl-http-6
+        - containerPort: 37027
+          name: esl-tcp-6
+        - containerPort: 9007
+          name: esl-http-7
+        - containerPort: 37028
+          name: esl-tcp-7
+        - containerPort: 9008
+          name: esl-http-8
+        - containerPort: 37029
+          name: esl-tcp-8
+        - containerPort: 9009
+          name: esl-http-9
+        - containerPort: 37030
+          name: esl-tcp-9
+        - containerPort: 9010
+          name: esl-http-10
+        - containerPort: 37031
+          name: esl-tcp-10
+        - containerPort: 9011
+          name: esl-http-11
+        - containerPort: 37032
+          name: esl-tcp-11
+        - containerPort: 9012
+          name: esl-http-12
+        - containerPort: 37033
+          name: esl-tcp-12
+        - containerPort: 9013
+          name: esl-http-13
+        - containerPort: 37034
+          name: esl-tcp-13
+        - containerPort: 9014
+          name: esl-http-14
+        - containerPort: 37035
+          name: esl-tcp-14
+        - containerPort: 9015
+          name: esl-http-15
+        - containerPort: 37036
+          name: esl-tcp-15
+        - containerPort: 9016
+          name: esl-http-16
+        - containerPort: 37037
+          name: esl-tcp-16
+        - containerPort: 9017
+          name: esl-http-17
+        - containerPort: 37038
+          name: esl-tcp-17
+        - containerPort: 9018
+          name: esl-http-18
+        - containerPort: 37039
+          name: esl-tcp-18
+        - containerPort: 9019
+          name: esl-http-19
+        - containerPort: 37040
+          name: esl-tcp-19
+        - containerPort: 9020
+          name: esl-http-20
+        - containerPort: 37041
+          name: esl-tcp-20
+        - containerPort: 9021
+          name: esl-http-21
+        - containerPort: 37042
+          name: esl-tcp-21
+        - containerPort: 9022
+          name: esl-http-22
+        - containerPort: 37043
+          name: esl-tcp-22
+        - containerPort: 9023
+          name: esl-http-23
+        - containerPort: 37044
+          name: esl-tcp-23
+        - containerPort: 9024
+          name: esl-http-24
+        - containerPort: 37045
+          name: esl-tcp-24
+        - containerPort: 9025
+          name: esl-http-25
+        - containerPort: 37046
+          name: esl-tcp-25
+        - containerPort: 9026
+          name: esl-http-26
+        - containerPort: 37047
+          name: esl-tcp-26
+        - containerPort: 9027
+          name: esl-http-27
+        - containerPort: 37048
+          name: esl-tcp-27
+        - containerPort: 9028
+          name: esl-http-28
+        - containerPort: 37049
+          name: esl-tcp-28
+        - containerPort: 9029
+          name: esl-http-29
+        - containerPort: 37050
+          name: esl-tcp-29
+        - containerPort: 9030
+          name: esl-http-30
+        - containerPort: 37051
+          name: esl-tcp-30
+        - containerPort: 9031
+          name: esl-http-31
+        - containerPort: 37052
+          name: esl-tcp-31
+        - containerPort: 9032
+          name: esl-http-32
+        - containerPort: 37053
+          name: esl-tcp-32
+        - containerPort: 9033
+          name: esl-http-33
+        - containerPort: 37054
+          name: esl-tcp-33
+        - containerPort: 9034
+          name: esl-http-34
+        - containerPort: 37055
+          name: esl-tcp-34
+        - containerPort: 9035
+          name: esl-http-35
+        - containerPort: 37056
+          name: esl-tcp-35
+        - containerPort: 9036
+          name: esl-http-36
+        - containerPort: 37057
+          name: esl-tcp-36
+        - containerPort: 9037
+          name: esl-http-37
+        - containerPort: 37058
+          name: esl-tcp-37
+        - containerPort: 9038
+          name: esl-http-38
+        - containerPort: 37059
+          name: esl-tcp-38
+        - containerPort: 9039
+          name: esl-http-39
+        - containerPort: 37060
+          name: esl-tcp-39
+        - containerPort: 9040
+          name: esl-http-40
+        - containerPort: 37061
+          name: esl-tcp-40
+        - containerPort: 9041
+          name: esl-http-41
+        - containerPort: 37062
+          name: esl-tcp-41
+        - containerPort: 9042
+          name: esl-http-42
+        - containerPort: 37063
+          name: esl-tcp-42
+        - containerPort: 9043
+          name: esl-http-43
+        - containerPort: 37064
+          name: esl-tcp-43
+        - containerPort: 9044
+          name: esl-http-44
+        - containerPort: 37065
+          name: esl-tcp-44
+        - containerPort: 9045
+          name: esl-http-45
+        - containerPort: 37066
+          name: esl-tcp-45
+        - containerPort: 9046
+          name: esl-http-46
+        - containerPort: 37067
+          name: esl-tcp-46
+        - containerPort: 9047
+          name: esl-http-47
+        - containerPort: 37068
+          name: esl-tcp-47
+        - containerPort: 9048
+          name: esl-http-48
+        - containerPort: 37069
+          name: esl-tcp-48
+        - containerPort: 9049
+          name: esl-http-49
+        - containerPort: 37070
+          name: esl-tcp-49
+        volumeMounts:
+        - name: config-volume
+          mountPath: /script
+      volumes:
+      - name: config-volume
+        configMap: 
+          name: nginx

@@ -1,7 +1,7 @@
 #! /bin/bash
 
 if [ $# -lt 4 ]; then
-    echo $0 need parameters
+    echo $0 parameters err
     exit 0
 fi
 

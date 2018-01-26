@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-esl
+spec:
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
+  ports:
+  - containerPort: 9000
+    name: esl-http-0
+  - containerPort: 37021
+    name: esl-tcp-0
+  - containerPort: 9001
+    name: esl-http-1
+  - containerPort: 37022
+    name: esl-tcp-1
+  - containerPort: 9002
+    name: esl-http-2
+  - containerPort: 37023
+    name: esl-tcp-2
+  - containerPort: 9003
+    name: esl-http-3
+  - containerPort: 37024
+    name: esl-tcp-3
+  - containerPort: 9004
+    name: esl-http-4
+  - containerPort: 37025
+    name: esl-tcp-4
+  - containerPort: 9005
+    name: esl-http-5
+  - containerPort: 37026
+    name: esl-tcp-5
+  - containerPort: 9006
+    name: esl-http-6
+  - containerPort: 37027
+    name: esl-tcp-6
+  - containerPort: 9007
+    name: esl-http-7
+  - containerPort: 37028
+    name: esl-tcp-7
+  - containerPort: 9008
+    name: esl-http-8
+  - containerPort: 37029
+    name: esl-tcp-8
+  - containerPort: 9009
+    name: esl-http-9
+  - containerPort: 37030
+    name: esl-tcp-9
+  - containerPort: 9010
+    name: esl-http-10
+  - containerPort: 37031
+    name: esl-tcp-10
+  selector:
+    app: nginx-esl
