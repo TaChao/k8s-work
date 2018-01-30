@@ -1,12 +1,23 @@
 #! /bin/bash
 
 #Global variables
-STATEFUL_SET_YAML=ESL-StatefulSet.yaml
-SERVICE_YAML=ESL-Service.yaml
-MAX=$1
-SETNAME=$2
+STATEFUL_SET_YAML=Nginx-ESL-StatefulSet.yaml
+SERVICE_YAML=Nginx-ESL-Service.yaml
+ESL_STATEFUL_SET_YAML=ESL-StatefulSet.yaml
+ESL_SERVICE_YAML=ESL-Service.yaml
+MAX_NUM=49
+MAX=${1:-10}
+
+if [ $MAX -gt $MAX_NUM ]
+then MAX=$MAX_NUM
+fi
+
+SETNAME=${2:-esl}
 STATEFUL_SET_PATH=./$STATEFUL_SET_YAML
 SERVICE_PATH=./$SERVICE_YAML
+ESL_STATEFUL_SET_PATH=./$ESL_STATEFUL_SET_YAML
+ESL_SERVICE_PATH=./$ESL_SERVICE_YAML
+OTHERSETTING_1=${3:-"tomcat-0.tomcat:8080"}
 
 #writting yaml file
 cat > $STATEFUL_SET_PATH <<EOF
@@ -37,7 +48,7 @@ spec:
           - name: SET_NAME
             value: "$SETNAME"
           - name: PODS_NUM
-            value: "$MAX"
+            value: "$MAX_NUM"
           - name: NAMESPACE
             valueFrom:
               fieldRef:
@@ -57,7 +68,7 @@ spec:
 
         ports:
 EOF
-for i in `seq 0 $1`;do
+for i in `seq 0 $MAX_NUM`;do
     let x=9000+$i
     let y=37021+$i
 
@@ -86,7 +97,7 @@ spec:
   - 0.0.0.0/0
   ports:
 EOF
-for i in `seq 0 $1`;do
+for i in `seq 0 $MAX_NUM`;do
     let x=9000+$i
     let y=37021+$i
 
@@ -99,3 +110,78 @@ cat >> $SERVICE_PATH <<EOF
   selector:
     app: nginx-$SETNAME
 EOF
+
+cat > $ESL_SERVICE_PATH <<EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: $SETNAME
+  labels:
+    app: $SETNAME
+spec:
+  clusterIP: None
+  ports:
+  - port: 9000
+    name: http
+  - port: 37021
+    name: tcp
+  selector:
+    app: $SETNAME
+EOF
+cat > $ESL_STATEFUL_SET_PATH <<EOF
+apiVersion: "apps/v1beta1"
+kind: StatefulSet
+metadata:
+  name: $SETNAME
+spec:
+  serviceName: $SETNAME
+  replicas: $MAX
+  template:
+    metadata:
+      labels:
+        app: $SETNAME
+    spec:
+      imagePullSecrets:
+      - name: regsecret
+      containers:
+      - name: $SETNAME
+        image: killonexx/hanshow:esl-2.2.2-v1
+        ports:
+        - containerPort: 9000
+          name: http
+        - containerPort: 37021
+          name: tcp
+        - containerPort: 37022
+          name: sslk
+        - containerPort: 8800
+          name: g1-udp
+        - containerPort: 5649
+          name: g1-tcp
+        - containerPort: 21
+          name: g1-ftp
+        resources:
+          limits:
+          #  cpu: "500m"
+            memory: 2Gi
+          requests:
+          # cpu: "500m"
+           memory: 2Gi
+        env:
+          - name: SW_URL
+            value: "$OTHERSETTING_1"
+          - name: APG1
+            value: "false"
+        volumeMounts:
+        - name: data
+          mountPath: /esl_data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: data
+      resources:
+        requests:
+          storage: 2Gi
+EOF
+echo "DONE!"

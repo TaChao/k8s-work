@@ -1,0 +1,211 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-eee
+spec:
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
+  ports:
+  - port: 9000
+    name: esl-http-0
+  - port: 37021
+    name: esl-tcp-0
+  - port: 9001
+    name: esl-http-1
+  - port: 37022
+    name: esl-tcp-1
+  - port: 9002
+    name: esl-http-2
+  - port: 37023
+    name: esl-tcp-2
+  - port: 9003
+    name: esl-http-3
+  - port: 37024
+    name: esl-tcp-3
+  - port: 9004
+    name: esl-http-4
+  - port: 37025
+    name: esl-tcp-4
+  - port: 9005
+    name: esl-http-5
+  - port: 37026
+    name: esl-tcp-5
+  - port: 9006
+    name: esl-http-6
+  - port: 37027
+    name: esl-tcp-6
+  - port: 9007
+    name: esl-http-7
+  - port: 37028
+    name: esl-tcp-7
+  - port: 9008
+    name: esl-http-8
+  - port: 37029
+    name: esl-tcp-8
+  - port: 9009
+    name: esl-http-9
+  - port: 37030
+    name: esl-tcp-9
+  - port: 9010
+    name: esl-http-10
+  - port: 37031
+    name: esl-tcp-10
+  - port: 9011
+    name: esl-http-11
+  - port: 37032
+    name: esl-tcp-11
+  - port: 9012
+    name: esl-http-12
+  - port: 37033
+    name: esl-tcp-12
+  - port: 9013
+    name: esl-http-13
+  - port: 37034
+    name: esl-tcp-13
+  - port: 9014
+    name: esl-http-14
+  - port: 37035
+    name: esl-tcp-14
+  - port: 9015
+    name: esl-http-15
+  - port: 37036
+    name: esl-tcp-15
+  - port: 9016
+    name: esl-http-16
+  - port: 37037
+    name: esl-tcp-16
+  - port: 9017
+    name: esl-http-17
+  - port: 37038
+    name: esl-tcp-17
+  - port: 9018
+    name: esl-http-18
+  - port: 37039
+    name: esl-tcp-18
+  - port: 9019
+    name: esl-http-19
+  - port: 37040
+    name: esl-tcp-19
+  - port: 9020
+    name: esl-http-20
+  - port: 37041
+    name: esl-tcp-20
+  - port: 9021
+    name: esl-http-21
+  - port: 37042
+    name: esl-tcp-21
+  - port: 9022
+    name: esl-http-22
+  - port: 37043
+    name: esl-tcp-22
+  - port: 9023
+    name: esl-http-23
+  - port: 37044
+    name: esl-tcp-23
+  - port: 9024
+    name: esl-http-24
+  - port: 37045
+    name: esl-tcp-24
+  - port: 9025
+    name: esl-http-25
+  - port: 37046
+    name: esl-tcp-25
+  - port: 9026
+    name: esl-http-26
+  - port: 37047
+    name: esl-tcp-26
+  - port: 9027
+    name: esl-http-27
+  - port: 37048
+    name: esl-tcp-27
+  - port: 9028
+    name: esl-http-28
+  - port: 37049
+    name: esl-tcp-28
+  - port: 9029
+    name: esl-http-29
+  - port: 37050
+    name: esl-tcp-29
+  - port: 9030
+    name: esl-http-30
+  - port: 37051
+    name: esl-tcp-30
+  - port: 9031
+    name: esl-http-31
+  - port: 37052
+    name: esl-tcp-31
+  - port: 9032
+    name: esl-http-32
+  - port: 37053
+    name: esl-tcp-32
+  - port: 9033
+    name: esl-http-33
+  - port: 37054
+    name: esl-tcp-33
+  - port: 9034
+    name: esl-http-34
+  - port: 37055
+    name: esl-tcp-34
+  - port: 9035
+    name: esl-http-35
+  - port: 37056
+    name: esl-tcp-35
+  - port: 9036
+    name: esl-http-36
+  - port: 37057
+    name: esl-tcp-36
+  - port: 9037
+    name: esl-http-37
+  - port: 37058
+    name: esl-tcp-37
+  - port: 9038
+    name: esl-http-38
+  - port: 37059
+    name: esl-tcp-38
+  - port: 9039
+    name: esl-http-39
+  - port: 37060
+    name: esl-tcp-39
+  - port: 9040
+    name: esl-http-40
+  - port: 37061
+    name: esl-tcp-40
+  - port: 9041
+    name: esl-http-41
+  - port: 37062
+    name: esl-tcp-41
+  - port: 9042
+    name: esl-http-42
+  - port: 37063
+    name: esl-tcp-42
+  - port: 9043
+    name: esl-http-43
+  - port: 37064
+    name: esl-tcp-43
+  - port: 9044
+    name: esl-http-44
+  - port: 37065
+    name: esl-tcp-44
+  - port: 9045
+    name: esl-http-45
+  - port: 37066
+    name: esl-tcp-45
+  - port: 9046
+    name: esl-http-46
+  - port: 37067
+    name: esl-tcp-46
+  - port: 9047
+    name: esl-http-47
+  - port: 37068
+    name: esl-tcp-47
+  - port: 9048
+    name: esl-http-48
+  - port: 37069
+    name: esl-tcp-48
+  - port: 9049
+    name: esl-http-49
+  - port: 37070
+    name: esl-tcp-49
+  selector:
+    app: nginx-eee
